@@ -1,8 +1,10 @@
 using Rocket.API;
-using VentixSystem.System.Model;
+using System.Xml.Serialization;
 
 namespace VentixSystem
 {
+    
+    [XmlRoot("VentixSystemConfiguration")]
     public class VentixSystemConfiguration: IRocketPluginConfiguration
     {
       
@@ -18,8 +20,6 @@ namespace VentixSystem
         
         public string DatabasePassword { get; set; }
         
-        public Kit[] Kits { get; set; }
-        
         public void LoadDefaults()
         {
             //defaults
@@ -31,20 +31,6 @@ namespace VentixSystem
             DatabaseName = "unturned";
             DatabaseUser = "unturned";
             DatabasePassword = "mypassword";
-
-            Kits = new Kit[]
-            {
-                new Kit()
-                {
-                    Name = "Maple",
-                    Items = new ushort[]
-                    {
-                        363,
-                        15,
-                        15
-                    }
-                }
-            };
         }
     }
 }

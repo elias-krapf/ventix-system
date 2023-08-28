@@ -1,8 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Rocket.API;
 using Rocket.Unturned.Chat;
+using Rocket.Unturned.Items;
 using Rocket.Unturned.Player;
+using SDG.Unturned;
+using UnityEngine;
+using VentixSystem.System.Constant.Kits;
+using UnturnedItems = VentixSystem.System.Helper.UnturnedItems;
 
 
 namespace VentixSystem.System.Commands
@@ -29,7 +35,7 @@ namespace VentixSystem.System.Commands
                 return;
             }
 
-            var kit = VentixSystem.Instance.Configuration.Instance.Kits.FirstOrDefault(singleKit => singleKit.Name == command[0]);
+            var kit = KitsConstants.Kits.FirstOrDefault(singleKit => String.Equals(singleKit.Name, command[0], (StringComparison)StringComparison.CurrentCultureIgnoreCase));
             if (kit == null)
             {
                 UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Kit not found! Use /kits");
@@ -40,8 +46,15 @@ namespace VentixSystem.System.Commands
 
             foreach (var item in kit.Items)
             {
-                player.GiveItem(item, 1);
+                if (item.SightId != null)
+                {
+                    
+                }
+                
+                
             }
+            Item MyItem = UnturnedItems.AssembleItem(363, 100, 147, 1007, 8, 149, 17);
+            player.Inventory.tryAddItem(MyItem, true);
             
             UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You received kit {kit.Name}!");
         }

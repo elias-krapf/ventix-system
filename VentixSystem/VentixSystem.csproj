@@ -39,6 +39,18 @@
         <Reference Include="Assembly-CSharp-firstpass">
           <HintPath>libraries\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
+        <Reference Include="I18N">
+          <HintPath>libraries\I18N.v4.dll</HintPath>
+        </Reference>
+        <Reference Include="I18N.West">
+          <HintPath>libraries\I18N.West.v4.dll</HintPath>
+        </Reference>
+        <Reference Include="MySql.Data">
+          <HintPath>libraries\MySql.Data.v8.0.20.0.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>libraries\Newtonsoft.Json.dll</HintPath>
+        </Reference>
         <Reference Include="Rocket.API">
           <HintPath>libraries\Rocket.API.dll</HintPath>
         </Reference>
@@ -51,6 +63,9 @@
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
+        <Reference Include="System.Management">
+          <HintPath>libraries\System.Management.v4.dll</HintPath>
+        </Reference>
         <Reference Include="System.Xml"/>
         <Reference Include="UnityEngine">
           <HintPath>libraries\UnityEngine.dll</HintPath>
@@ -60,16 +75,32 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="System\Commands\BalanceCommand.cs" />
+        <Compile Include="System\Commands\ClearInventoryCommand.cs" />
         <Compile Include="System\Commands\KitCommand.cs" />
+        <Compile Include="System\Commands\MaxskillsCommand.cs" />
+        <Compile Include="System\Commands\RankCommand.cs" />
         <Compile Include="System\Commands\TpaCommand.cs" />
-        <Compile Include="System\Model\Kit.cs" />
+        <Compile Include="System\Constant\Chat\ChatTagsConstants.cs" />
+        <Compile Include="System\Constant\Kits\KitsConstants.cs" />
+        <Compile Include="System\Database\DatabaseTables.cs" />
+        <Compile Include="System\Database\MySQLUtils.cs" />
+        <Compile Include="System\Entity\VentixPlayer.cs" />
+        <Compile Include="System\Helper\ItemUtils.cs" />
+        <Compile Include="System\Listener\StaminaListener.cs" />
+        <Compile Include="System\Listener\JoinLeaveListener.cs" />
+        <Compile Include="System\Listener\PlayerChatListener.cs" />
+        <Compile Include="System\Model\Chat\ChatFormat.cs" />
+        <Compile Include="System\Model\Chat\ChatModeConfig.cs" />
+        <Compile Include="System\Model\Chat\ChatTag.cs" />
+        <Compile Include="System\Model\Kit\Attachment.cs" />
+        <Compile Include="System\Model\Kit\Item.cs" />
+        <Compile Include="System\Model\Kit\Kit.cs" />
+        <Compile Include="System\Model\Rank\Rank.cs" />
+        <Compile Include="System\Service\Chat\ChatFormatService.cs" />
         <Compile Include="Ventix.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="VentixSystemConfiguration.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="System\Listener\" />
-      <Folder Include="System\Service\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
