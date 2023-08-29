@@ -23,7 +23,7 @@ namespace VentixSystem.System.Entity
         {
            
             _player = player;
-            _bedPos = Vector3.up + bedPos + new Vector3(0f, 0.5f, 0f);
+            _bedPos = Vector3.up + bedPos + new Vector3(0f, 0f, 0f);
             _bedRot = bedRot;
 
             VentixPlayer ventixPlayer = VentixPlayer.FetchPlayer(player);

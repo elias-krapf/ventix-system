@@ -35,11 +35,11 @@ namespace VentixSystem
             TpaDelay = 3;
             
             //database
-            DatabaseHost = "s";
+            DatabaseHost = "db.asdf.de";
             DatabasePort = "3306";
-            DatabaseName = "s";
-            DatabaseUser = "s";
-            DatabasePassword = "s";
+            DatabaseName = "asdf";
+            DatabaseUser = "asdf";
+            DatabasePassword = "asdf";
         }
     }
 }
