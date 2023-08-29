@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Rocket.API;
 using Rocket.Unturned.Player;
@@ -41,6 +42,10 @@ namespace VentixSystem.System.Entity
         
         public Rank Rank { get; set; }
         
+        public string AvatarIcon { get; set; }
+        
+        public DateTime CurrentPlaytime { get; set; }
+        
         public void Load()
         {
             MySQLUtils.LoadOrCreatePlayer(this);
@@ -75,7 +80,6 @@ namespace VentixSystem.System.Entity
                     return false;
             }
 
-            return false;
         }
         
         public string GetPrefix()

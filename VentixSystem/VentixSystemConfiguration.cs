@@ -10,6 +10,10 @@ namespace VentixSystem
       
         public string SystemName { get; set; }
         
+        public int TpaDuration { get; set; }
+        public int TpaCooldown { get; set; }
+        public int TpaDelay { get; set; }
+        
         public string DatabaseHost { get; set; }
 
         public string DatabasePort { get; set; }
@@ -25,12 +29,17 @@ namespace VentixSystem
             //defaults
             SystemName = "[Ventix]";
             
+            //tpa
+            TpaDuration = 20;
+            TpaCooldown = 30;
+            TpaDelay = 3;
+            
             //database
-            DatabaseHost = "localhost";
+            DatabaseHost = "s";
             DatabasePort = "3306";
-            DatabaseName = "unturned";
-            DatabaseUser = "unturned";
-            DatabasePassword = "mypassword";
+            DatabaseName = "s";
+            DatabaseUser = "s";
+            DatabasePassword = "s";
         }
     }
 }

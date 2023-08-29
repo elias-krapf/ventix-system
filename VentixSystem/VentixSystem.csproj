@@ -77,16 +77,26 @@
     <ItemGroup>
         <Compile Include="System\Commands\BalanceCommand.cs" />
         <Compile Include="System\Commands\ClearInventoryCommand.cs" />
+        <Compile Include="System\Commands\DutyCommand.cs" />
+        <Compile Include="System\Commands\GodCommand.cs" />
+        <Compile Include="System\Commands\HomeCommand.cs" />
         <Compile Include="System\Commands\KitCommand.cs" />
+        <Compile Include="System\Commands\KitsCommand.cs" />
         <Compile Include="System\Commands\MaxskillsCommand.cs" />
         <Compile Include="System\Commands\RankCommand.cs" />
+        <Compile Include="System\Commands\StoplagCommand.cs" />
         <Compile Include="System\Commands\TpaCommand.cs" />
+        <Compile Include="System\Commands\TrashCommand.cs" />
+        <Compile Include="System\Commands\VanishCommand.cs" />
+        <Compile Include="System\Commands\VaultCommand.cs" />
         <Compile Include="System\Constant\Chat\ChatTagsConstants.cs" />
         <Compile Include="System\Constant\Kits\KitsConstants.cs" />
         <Compile Include="System\Database\DatabaseTables.cs" />
         <Compile Include="System\Database\MySQLUtils.cs" />
+        <Compile Include="System\Entity\HomePlayer.cs" />
         <Compile Include="System\Entity\VentixPlayer.cs" />
         <Compile Include="System\Helper\ItemUtils.cs" />
+        <Compile Include="System\Listener\PlayerDeathListener.cs" />
         <Compile Include="System\Listener\StaminaListener.cs" />
         <Compile Include="System\Listener\JoinLeaveListener.cs" />
         <Compile Include="System\Listener\PlayerChatListener.cs" />
@@ -97,6 +107,8 @@
         <Compile Include="System\Model\Kit\Item.cs" />
         <Compile Include="System\Model\Kit\Kit.cs" />
         <Compile Include="System\Model\Rank\Rank.cs" />
+        <Compile Include="System\Model\Tpa\TPARequest.cs" />
+        <Compile Include="System\Model\Vault\ItemVaultPlayerComponent.cs" />
         <Compile Include="System\Service\Chat\ChatFormatService.cs" />
         <Compile Include="Ventix.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>

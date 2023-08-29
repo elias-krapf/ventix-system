@@ -2,6 +2,7 @@ using Rocket.Unturned.Player;
 using SDG.Unturned;
 using System.Collections.Generic;
 using Rocket.Unturned.Chat;
+using VentixSystem.System.Entity;
 using VentixSystem.System.Model.Chat;
 using VentixSystem.System.Service.Chat;
 
@@ -22,7 +23,7 @@ namespace VentixSystem.System.Listener
             
             
             cancel = true;
-            
+            VentixPlayer ventixPlayer = VentixPlayer.FetchPlayer(player);
             UnityEngine.Color msgColor = color;
             msgColor = UnturnedChat.GetColorFromName("white", color);
                 
@@ -38,8 +39,7 @@ namespace VentixSystem.System.Listener
                 foreach (Player playerInRange in playersInRange)
                 {
                     SteamPlayer client = playerInRange.channel.owner;
-                    string avatarUrl = player.SteamProfile.AvatarIcon.ToString();
-                    ChatManager.serverSendMessage(formattedMsg, msgColor, player.SteamPlayer(), client, chatMode, avatarUrl, true);
+                    ChatManager.serverSendMessage(formattedMsg, msgColor, player.SteamPlayer(), client, chatMode, ventixPlayer.AvatarIcon, true);
                 }
             } else if (chatMode == EChatMode.GROUP)
             {

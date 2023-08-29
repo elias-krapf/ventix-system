@@ -13,28 +13,7 @@ namespace VentixSystem.System.Service.Chat
 {
         public class ChatFormatService
     {
-
-        public List<ChatTag> GetPlayerTags(UnturnedPlayer player)
-        {
-            
-            //CHECK PERMS
-            
-            return new List<ChatTag>()
-            {
-                new ChatTag()
-                {
-                    Permission = "tag.admin",
-                    Prefix = "{color=blue}Admin{/color}",
-                    Suffix = ""
-                },
-                new ChatTag()
-                {
-                    Permission = "tag.vip",
-                    Prefix = "",
-                    Suffix = "{color=yellow}VIP{/color}"
-                }
-            };
-        }
+        
         
         public string Format(UnturnedPlayer player, EChatMode mode, string message)
         {

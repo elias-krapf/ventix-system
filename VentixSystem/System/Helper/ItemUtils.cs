@@ -32,7 +32,7 @@ namespace VentixSystem.System.Helper
         {
             byte[] metadata = new byte[18];
 
-            if (sight != null && sight != 0)
+            if (sight != 0)
             {
                 byte[] sightBytes = BitConverter.GetBytes(sight);
                 metadata[0] = sightBytes[0];
@@ -40,7 +40,7 @@ namespace VentixSystem.System.Helper
                 metadata[13] = 100;
             }
 
-            if (tactical != null && tactical != 0)
+            if (tactical != 0)
             {
                 byte[] tacticalBytes = BitConverter.GetBytes(tactical);
                 metadata[2] = tacticalBytes[0];
@@ -48,7 +48,7 @@ namespace VentixSystem.System.Helper
                 metadata[14] = 100;
             }
 
-            if (grip != null && grip != 0)
+            if (grip != 0)
             {
                 byte[] gripBytes = BitConverter.GetBytes(grip);
                 metadata[4] = gripBytes[0];
@@ -56,7 +56,7 @@ namespace VentixSystem.System.Helper
                 metadata[15] = 100;
             }
 
-            if (barrel != null && barrel != 0)
+            if ( barrel != 0)
             {
                 byte[] barrelBytes = BitConverter.GetBytes(barrel);
                 metadata[6] = barrelBytes[0];
@@ -64,7 +64,7 @@ namespace VentixSystem.System.Helper
                 metadata[16] = 100;
             }
 
-            if (magazine != null && magazine != 0)
+            if (magazine != 0)
             {
                 byte[] magazineBytes = BitConverter.GetBytes(magazine);
                 metadata[8] = magazineBytes[0];

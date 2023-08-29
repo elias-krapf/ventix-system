@@ -30,18 +30,43 @@ namespace VentixSystem.System.Commands
                     UnturnedChat.Say(unturnedPlayer, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You dont have Permission :(", Color.red);
                     return;
                 }
-                
-                UnturnedPlayer target = UnturnedPlayer.FromName(command[0]);
-                if (target == null)
+
+                string playerName = command[0];
+                if (!playerName.Equals("*"))
                 {
-                    UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Player cannot be found!", Color.red);
-                    return;
-                }
+                    UnturnedPlayer target = UnturnedPlayer.FromName(command[0]);
+                    if (target == null)
+                    {
+                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Player cannot be found!", Color.red);
+                        return;
+                    }
                 
-                Clear(target.Player.inventory);
-                UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared {target.DisplayName}'s inventory!");
-                UnturnedChat.Say(target, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
-                return;
+                    Clear(target.Player.inventory);
+                    Clear(target.Player.inventory);
+                    UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared {target.DisplayName}'s inventory!");
+                    UnturnedChat.Say(target, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
+                    return;   
+                }
+                else
+                {
+                    if (ventixPlayer.IsAllowedRank(Rank.OWNER))
+                    {
+                        foreach (var steamPlayer in Provider.clients)
+                        {
+                            UnturnedPlayer current = UnturnedPlayer.FromCSteamID(steamPlayer.playerID.steamID);
+                            Clear(current.Player.inventory);
+                            UnturnedChat.Say(current, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
+                        }   
+                        
+                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared everyone's inventory!");
+                        return;
+                    }
+                    else
+                    {
+                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You are not allowed to use '*'.", Color.red);
+                        return;
+                    }
+                }
             }
 
             Clear(unturnedPlayer.Player.inventory);
@@ -55,6 +80,7 @@ namespace VentixSystem.System.Commands
             HideWeaponModels(player);
             ClearItems(playerInv);
             ClearClothes(clothing);
+            ClearItems(playerInv);
         }
 
         private void ClearItems(PlayerInventory playerInv)

@@ -40,6 +40,12 @@ namespace VentixSystem.System.Commands
             }
 
             UnturnedPlayer targetUnturnedPlayer = UnturnedPlayer.FromName(command[1]);
+            if (targetUnturnedPlayer == null)
+            {
+                UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Player cannot be found!", Color.red);
+                return;
+            }
+            
             VentixPlayer targetVentixPlayer = VentixPlayer.FetchPlayer(targetUnturnedPlayer);
             
             switch (command[0].ToLower())
