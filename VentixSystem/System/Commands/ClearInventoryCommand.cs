@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Rocket.API;
-using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
+using VentixSystem.System.Entity;
+using Rocket.Unturned.Chat;
 using SDG.Unturned;
 using UnityEngine;
-using VentixSystem.System.Entity;
 using VentixSystem.System.Model.Rank;
 
 namespace VentixSystem.System.Commands
@@ -23,69 +23,62 @@ namespace VentixSystem.System.Commands
             UnturnedPlayer unturnedPlayer = caller as UnturnedPlayer;
             VentixPlayer ventixPlayer = VentixPlayer.FetchPlayer(unturnedPlayer);
             
-            if (command.Length > 0)
+            if (command.Length == 0)
             {
-                if (!ventixPlayer.IsAllowedRank(Rank.STAFF))
-                {
-                    UnturnedChat.Say(unturnedPlayer, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You dont have Permission :(", Color.red);
-                    return;
-                }
+                ClearInventory(unturnedPlayer);
+                UnturnedChat.Say(unturnedPlayer, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared");
+                return;
+            }
 
-                string playerName = command[0];
-                if (!playerName.Equals("*"))
+            var name = command[0];
+            if (!name.Equals("*"))
+            {
+                var target = UnturnedPlayer.FromName(command[0]);
+
+                if (target != null)
                 {
-                    UnturnedPlayer target = UnturnedPlayer.FromName(command[0]);
-                    if (target == null)
-                    {
-                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Player cannot be found!", Color.red);
-                        return;
-                    }
-                
-                    Clear(target.Player.inventory);
-                    Clear(target.Player.inventory);
+                    ClearInventory(UnturnedPlayer.FromName(command[0]));
                     UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared {target.DisplayName}'s inventory!");
                     UnturnedChat.Say(target, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
-                    return;   
                 }
                 else
                 {
-                    if (ventixPlayer.IsAllowedRank(Rank.OWNER))
-                    {
-                        foreach (var steamPlayer in Provider.clients)
-                        {
-                            UnturnedPlayer current = UnturnedPlayer.FromCSteamID(steamPlayer.playerID.steamID);
-                            Clear(current.Player.inventory);
-                            UnturnedChat.Say(current, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
-                        }   
-                        
-                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared everyone's inventory!");
-                        return;
-                    }
-                    else
-                    {
-                        UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You are not allowed to use '*'.", Color.red);
-                        return;
-                    }
-                }
+                    UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Player cannot be found!", Color.red);
+                }   
             }
-
-            Clear(unturnedPlayer.Player.inventory);
-            UnturnedChat.Say(unturnedPlayer, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared");
+            else
+            {
+                if (ventixPlayer.IsAllowedRank(Rank.OWNER))
+                {
+                    foreach (var steamPlayer in Provider.clients)
+                    {
+                        UnturnedPlayer current = UnturnedPlayer.FromCSteamID(steamPlayer.playerID.steamID);
+                        ClearInventory(current);
+                        UnturnedChat.Say(current, $"{VentixSystem.Instance.Configuration.Instance.SystemName} Your inventory was cleared by {unturnedPlayer.DisplayName}!");
+                    }   
+                        
+                    UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You cleared everyone's inventory!");
+                    return;
+                }
+              
+                    UnturnedChat.Say(caller, $"{VentixSystem.Instance.Configuration.Instance.SystemName} You are not allowed to use '*'.", Color.red);
+            }
+             
+            
         }
 
-        public void Clear(PlayerInventory playerInv)
+        private void ClearInventory(UnturnedPlayer player)
         {
-            var player = playerInv.player;
-            var clothing = player.clothing;
-            HideWeaponModels(player);
-            ClearItems(playerInv);
-            ClearClothes(clothing);
-            ClearItems(playerInv);
-        }
+            var playerInv = player.Inventory;
+            
 
-        private void ClearItems(PlayerInventory playerInv)
-        {
-            for (byte page = 0; page < 6; page++)
+            player.Player.channel.send("tellSlot", ESteamCall.ALL, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                (byte)0, (byte)0, EMPTY_BYTE_ARRAY);
+            player.Player.channel.send("tellSlot", ESteamCall.ALL, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                (byte)1, (byte)0, EMPTY_BYTE_ARRAY);
+
+
+            for (byte page = 0; page < PlayerInventory.PAGES; page++)
             {
                 if (page == PlayerInventory.AREA)
                     continue;
@@ -97,40 +90,39 @@ namespace VentixSystem.System.Commands
                     playerInv.removeItem(page, 0);
                 }
             }
+
+            
+
+            player.Player.clothing.askWearBackpack(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearGlasses(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearHat(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearPants(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearMask(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearShirt(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
+
+            player.Player.clothing.askWearVest(0, 0, EMPTY_BYTE_ARRAY, true);
+            removeUnequipped(playerInv);
         }
 
-        private void ClearClothes(PlayerClothing cloth)
-        {
-            cloth.askWearBackpack(0, 0, new byte[0], true);
-            cloth.askWearGlasses(0, 0, new byte[0], true);
-            cloth.askWearHat(0, 0, new byte[0], true);
-            cloth.askWearPants(0, 0, new byte[0], true);
-            cloth.askWearMask(0, 0, new byte[0], true);
-            cloth.askWearShirt(0, 0, new byte[0], true);
-            cloth.askWearVest(0, 0, new byte[0], true);
+        public readonly byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
-            for (byte i = 0; i < cloth.player.inventory.getItemCount(2); i++)
+        public void removeUnequipped(PlayerInventory playerInv)
+        {
+            for (byte i = 0; i < playerInv.getItemCount(2); i++)
             {
-                cloth.player.inventory.removeItem(2, 0);
+                playerInv.removeItem(2, 0);
             }
-        }
-
-        private void HideWeaponModels(Player player)
-        {
-
-            player.channel.send("tellSlot", (ESteamCall)1, (ESteamPacket)15,
-                new object[] {
-                    0,
-                    0,
-                    new byte[0] 
-                });
-
-            player.channel.send("tellSlot", (ESteamCall)1, (ESteamPacket)15,
-            new object[] {
-                    1,
-                    0,
-                    new byte[0]
-            });
         }
     }
 }

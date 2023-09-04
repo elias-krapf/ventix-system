@@ -78,13 +78,15 @@
         <Compile Include="System\Commands\BalanceCommand.cs" />
         <Compile Include="System\Commands\ClearInventoryCommand.cs" />
         <Compile Include="System\Commands\DutyCommand.cs" />
+        <Compile Include="System\Commands\FlyCommand.cs" />
         <Compile Include="System\Commands\GodCommand.cs" />
         <Compile Include="System\Commands\HomeCommand.cs" />
         <Compile Include="System\Commands\KitCommand.cs" />
         <Compile Include="System\Commands\KitsCommand.cs" />
         <Compile Include="System\Commands\MaxskillsCommand.cs" />
+        <Compile Include="System\Commands\PayCommand.cs" />
         <Compile Include="System\Commands\RankCommand.cs" />
-        <Compile Include="System\Commands\StoplagCommand.cs" />
+        <Compile Include="System\Commands\LagCommand.cs" />
         <Compile Include="System\Commands\TpaCommand.cs" />
         <Compile Include="System\Commands\TrashCommand.cs" />
         <Compile Include="System\Commands\VanishCommand.cs" />
@@ -103,6 +105,7 @@
         <Compile Include="System\Model\Chat\ChatFormat.cs" />
         <Compile Include="System\Model\Chat\ChatModeConfig.cs" />
         <Compile Include="System\Model\Chat\ChatTag.cs" />
+        <Compile Include="System\Model\Fly\FlyComponent.cs" />
         <Compile Include="System\Model\Kit\Attachment.cs" />
         <Compile Include="System\Model\Kit\Item.cs" />
         <Compile Include="System\Model\Kit\Kit.cs" />

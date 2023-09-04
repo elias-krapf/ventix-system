@@ -4,6 +4,7 @@ using Rocket.Core.Plugins;
 using Rocket.Unturned;
 using Rocket.Unturned.Events;
 using SDG.Unturned;
+using VentixSystem.System.Commands;
 using VentixSystem.System.Database;
 using VentixSystem.System.Listener;
 
@@ -25,6 +26,7 @@ namespace VentixSystem
             UnturnedPlayerEvents.OnPlayerDead += new PlayerDeathListener().onDead;
             UnturnedPlayerEvents.OnPlayerDeath += new PlayerDeathListener().OnDeath;
             UnturnedPlayerEvents.OnPlayerUpdateStamina += new StaminaListener().HandlePlayerStaminaUpdate;
+            PlayerInput.onPluginKeyTick += new FlyCommand().KeyDown;
             
             U.Events.OnPlayerConnected += new JoinLeaveListener().OnJoin;
             U.Events.OnPlayerDisconnected += new JoinLeaveListener().OnLeave;

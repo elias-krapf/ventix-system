@@ -35,11 +35,11 @@ namespace VentixSystem
             TpaDelay = 3;
             
             //database
-            DatabaseHost = "db.asdf.de";
+            DatabaseHost = "db.godigital24.de";
             DatabasePort = "3306";
-            DatabaseName = "asdf";
-            DatabaseUser = "asdf";
-            DatabasePassword = "asdf";
+            DatabaseName = "unturned";
+            DatabaseUser = "unturned";
+            DatabasePassword = "jkRtgCk36RnQOI8Y";
         }
     }
 }
